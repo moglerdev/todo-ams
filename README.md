@@ -1,2 +1,2 @@
-# todo-ams
-Todoliste in Angular und PHP
+# Todo-AMS 
+2020 &copy; Copyrights by Asmus, Marco, Simon  
