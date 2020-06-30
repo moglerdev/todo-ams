@@ -9,6 +9,8 @@ class TodoController extends Controller
 {
     //
     public function getAllTodos() {
+      $todos = Todo::get()->toJson(JSON_PRETTY_PRINT);
+      return response($todos, 200);
     }
 
     public function createTodo(Request $request){
