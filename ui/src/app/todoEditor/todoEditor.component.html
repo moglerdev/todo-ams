@@ -3,58 +3,68 @@
 <mat-grid-list cols="6" rowHeight="100px">
     <mat-grid-tile colspan="3" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Erstellt</mat-label>
-            <input disabled matInput placeholder="Schnell beschreibender Titel?">
+            <mat-label>Erstellt am:</mat-label>
+            <input disabled matInput [matDatepicker]="picker_created_at" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.created_at" (input)="todo.subject = $event.target.value">
+            <mat-datepicker #picker_created_at></mat-datepicker>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="3" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Geändert am</mat-label>
-            <input disabled matInput placeholder="Schnell beschreibender Titel?">
+            <mat-label>Geändert am:</mat-label>
+            <input disabled matInput [matDatepicker]="picker_updated_at" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.updated_at" (input)="todo.subject = $event.target.value">
+            <mat-datepicker #picker_updated_at></mat-datepicker>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="4" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Titel</mat-label>
-            <input matInput placeholder="Schnell beschreibender Titel?">
+            <input matInput placeholder="Schnell beschreibender Titel?" [value]="todo.subject" (input)="todo.subject = $event.target.value">
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Gewicht</mat-label>
-            <mat-select>
-                <mat-option value="1">unwichtig</mat-option>
-                <mat-option value="2">kaum wichtig</mat-option>
-                <mat-option value="3">normal</mat-option>
-                <mat-option value="4">wichtig</mat-option>
-                <mat-option value="5">sehr wichtig</mat-option>
+            <mat-select [(value)]="todo.weight">
+                <mat-option [value]="1">unwichtig</mat-option>
+                <mat-option [value]="2">kaum wichtig</mat-option>
+                <mat-option [value]="3">normal</mat-option>
+                <mat-option [value]="4">wichtig</mat-option>
+                <mat-option [value]="5">sehr wichtig</mat-option>
             </mat-select>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="4" rowspan="2" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Beschreibung</mat-label>
-            <textarea matInput placeholder="Um was geht es genau in dieser Todo?" style="height: 160px; resize: none;"></textarea>
+            <textarea matInput placeholder="Um was geht es genau in dieser Todo?" style="height: 160px; resize: none;" [value]="todo.description" (input)="todo.description = $event.target.value"></textarea>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Deadline</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="Bis wann muss die Todo erledigt sein?">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <input matInput [matDatepicker]="picker_deadline" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.deadline" (input)="todo.subject = $event.target.value">
+            <mat-datepicker-toggle matSuffix [for]="picker_deadline"></mat-datepicker-toggle>
+            <mat-datepicker #picker_deadline></mat-datepicker>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Status</mat-label>
-            <mat-select>
-                <mat-option value="1">Offen</mat-option>
-                <mat-option value="2">in Bearbeitung</mat-option>
-                <mat-option value="3">ereldigt</mat-option>
-                <mat-option value="4">verspätet erledigt</mat-option>
-                <mat-option value="5">abgebrochen</mat-option>
+            <mat-select [(value)]="todo.state">
+                <mat-option [value]="1">Offen</mat-option>
+                <mat-option [value]="2">in Bearbeitung</mat-option>
+                <mat-option [value]="3">ereldigt</mat-option>
+                <mat-option [value]="4">verspätet erledigt</mat-option>
+                <mat-option [value]="5">abgebrochen</mat-option>
             </mat-select>
         </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="6" rowspan="1" style.background="green">
+        <button mat-button color="warn" (click)="closeTodo.emit($event)">
+            <mat-icon aria-hidden="false" aria-label="Delete Todo">block</mat-icon> Abbrechen
+        </button>
+        <button mat-button color="primary" (click)="saveTodo($event)">
+            <mat-icon aria-hidden="false" aria-label="Speichern Todo">save</mat-icon> Speichern
+        </button>
     </mat-grid-tile>
 </mat-grid-list>

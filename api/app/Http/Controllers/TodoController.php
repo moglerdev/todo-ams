@@ -29,7 +29,7 @@ class TodoController extends Controller
     }
 
     public function getTodo($id){
-        if(Todo::where("id", $id)->exists()){
+        if(Todo::where("id", '=', $id)->first() !== null){
             $todo = Todo::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($todo, 200);
         }
@@ -41,7 +41,8 @@ class TodoController extends Controller
     }
 
     public function updateTodo(Request $request, $id){
-        if(Todo::where('id', $id)->exist()){
+        print("FUCK U");
+        if(Todo::where("id", '=', $id)->first() !== null){
             $todo = Todo::find($id);
             $todo->subject = is_null($request->subject) ? $todo->subject : $request->subject;
             $todo->description = is_null($request->description) ? $todo->description : $request->description;
@@ -63,7 +64,7 @@ class TodoController extends Controller
     }
 
     public function deleteTodo($id){
-        if(Todo::where('id', $id)->exist()){
+        if(Todo::where("id", '=', $id)->first() !== null){
             $todo = Todo::find($id);
             $todo->delete();
 

@@ -8,6 +8,6 @@ class Todo extends Model
 {
     //
     protected $table = "todos";
-    protected $fillable = ["subject", "description"];
+    protected $fillable = ["subject", "description", "weight", "deadline", "state", "autor"];
 
 }

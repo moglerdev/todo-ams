@@ -104,7 +104,6 @@ import { TodoEditorComponent } from './todoEditor/todoEditor.component';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
-    
   ],
   providers: [],
   bootstrap: [AppComponent],

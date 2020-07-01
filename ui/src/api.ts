@@ -6,19 +6,28 @@ export const API_Todos = {
       method: 'GET',
     }),
   getTodo: (id) =>
-    fetch(new URL('todos/', main_url).href, {
+    fetch(new URL('todos/'+id, main_url).href, {
       method: 'GET',
     }),
   createTodo: (todo) =>
     fetch(new URL('todos/', main_url).href, {
       method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(todo)
     }),
   updateTodo: (id, todo) =>
-    fetch(new URL('todos/', main_url).href, {
-      method: 'PUT',
+    fetch(new URL('todos/'+id, main_url).href, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(todo)
     }),
   deleteTodo: (id) =>
-    fetch(new URL('todos/', main_url).href, {
+    fetch(new URL('todos/'+id, main_url).href, {
       method: 'DELETE',
     }),
 };

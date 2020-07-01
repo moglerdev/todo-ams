@@ -2,8 +2,8 @@
     <span>My Application</span>
 </mat-toolbar>
 
-<app-todoEditor></app-todoEditor>
+<app-todoEditor *ngIf="edit != null" [todo]="edit" (closeTodo)="closeTodo($event)"></app-todoEditor>
 
-<app-todoList> </app-todoList>
+<app-todoList (editingTodo)="editTodo($event)"> </app-todoList>
 
 <router-outlet></router-outlet>

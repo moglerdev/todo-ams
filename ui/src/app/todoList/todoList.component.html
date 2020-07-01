@@ -5,13 +5,13 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
         <mat-cell *matCellDef="let todo">
-            <button mat-icon-button color="warn">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
+            <button mat-icon-button color="warn" (click)="deleteTodo(todo)">
+        <mat-icon aria-hidden="false" aria-label="Delete Todo"
           >delete</mat-icon
         >
       </button>
-            <button mat-icon-button color="primary">
-        <mat-icon aria-hidden="false" aria-label="Example home icon"
+            <button mat-icon-button color="primary" (click)="editTodo(todo)">
+        <mat-icon aria-hidden="false" aria-label="Edit Todo"
           >create</mat-icon
         >
       </button>
