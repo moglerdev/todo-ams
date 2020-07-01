@@ -24,3 +24,5 @@ Route::get('todos/single/{id}', 'TodoController@getTodo');
 Route::post('todos', 'TodoController@createTodo');
 Route::put('todos/{id}', 'TodoController@updateTodo');
 Route::delete('todos/{id}', 'TodoController@deleteTodo');
+
+Route::post('auth/register', 'AuthController@register');
