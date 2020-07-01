@@ -7,8 +7,6 @@ use App\Todo;
 
 class TodoController extends Controller
 {
-    // TODO Get All Todos from Main Todo
-    // TODO Get All Main Todos
     public function getAllMainTodos() {  // TODO Is from Autor
       $todos = Todo::where("todo_id", '=', null)->get()->toJson(JSON_PRETTY_PRINT);
       return response($todos, 200);
