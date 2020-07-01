@@ -7,30 +7,18 @@ use App\Todo;
 
 class TodoController extends Controller
 {
-    //
-    public function getAllTodos() {
-      $todos = Todo::get()->toJson(JSON_PRETTY_PRINT);
+    // TODO Get All Todos from Main Todo
+    // TODO Get All Main Todos
+    public function getAllMainTodos() {  // TODO Is from Autor
+      $todos = Todo::where("todo_id", '=', null)->get()->toJson(JSON_PRETTY_PRINT);
       return response($todos, 200);
     }
 
-    public function createTodo(Request $request){
-        $todo = new Todo();
-        $todo->subject = $request->subject;
-        $todo->description = $request->description;
-        $todo->weight = $request->weight;
-        $todo->deadline = $request->deadline;
-        $todo->status = $request->status;
-        $todo->autor = $request->autor;
-        $todo->save();
-
-        return response()->json([
-            "message" => "todo created"
-        ], 201);
-    }
-
-    public function getTodo($id){
-        if(Todo::where("id", '=', $id)->first() !== null){
-            $todo = Todo::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+    public function getAllTodosFromMain($main_todo_id){  // TODO Is from Autor
+        $todo_db = Todo::where("todo_id", '=', $main_todo_id);
+        if($todo_db->first() !== null){
+            $todo_db = Todo::where("todo_id", '=', $main_todo_id);
+            $todo = $todo_db->get()->toJson(JSON_PRETTY_PRINT);
             return response($todo, 200);
         }
         else{
@@ -40,16 +28,46 @@ class TodoController extends Controller
         }
     }
 
-    public function updateTodo(Request $request, $id){
+    public function getTodo($id){ // TODO Is from Autor
+        $todo_db = Todo::where("id", '=', $id)->first();
+        if(todo_db !== null){
+            $todo = $todo_db->toJson(JSON_PRETTY_PRINT);
+            return response($todo, 200);
+        }
+        else{
+            return response()->json([
+                "message" => "Student not found"
+            ], 404);
+        }
+    }
+
+    public function createTodo(Request $request){  // TODO Is from Autor
+        $todo = new Todo();
+        $todo->autor_id = $request->autor_id;
+        $todo->todo_id = $request->todo_id;
+        $todo->subject = $request->subject;
+        $todo->description = $request->description;
+        $todo->weight = $request->weight;
+        $todo->deadline = $request->deadline;
+        $todo->status = $request->status;
+        $todo->save();
+
+        return response()->json([
+            "message" => "todo created"
+        ], 201);
+    }
+
+    public function updateTodo(Request $request, $id){ // TODO Is from Autor
         print("FUCK U");
         if(Todo::where("id", '=', $id)->first() !== null){
             $todo = Todo::find($id);
+            $todo->autor_id = is_null($request->autor_id) ? $todo->autor_id : $request->autor_id;
+            $todo->todo_id = is_null($request->todo_id) ? $todo->todo_id : $request->todo_id;
             $todo->subject = is_null($request->subject) ? $todo->subject : $request->subject;
             $todo->description = is_null($request->description) ? $todo->description : $request->description;
             $todo->weight = is_null($request->weight) ? $todo->weight : $request->weight;
             $todo->deadline = is_null($request->deadline) ? $todo->deadline : $request->deadline;
             $todo->status = is_null($request->status) ? $todo->status : $request->status;
-            $todo->autor = is_null($request->autor) ? $todo->autor : $request->autor;
             $todo->save();
 
             return response()->json([
@@ -63,7 +81,7 @@ class TodoController extends Controller
         }
     }
 
-    public function deleteTodo($id){
+    public function deleteTodo($id){  // TODO Is from Autor
         if(Todo::where("id", '=', $id)->first() !== null){
             $todo = Todo::find($id);
             $todo->delete();

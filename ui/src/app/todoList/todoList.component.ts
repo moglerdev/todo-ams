@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { API_Todos } from '../../api';
 import { Todo } from '../Todo.type';
 
@@ -9,11 +9,15 @@ import * as moment from 'moment';
   templateUrl: './todoList.component.html',
   styleUrls: ['./todoList.component.css'],
 })
-export class TodoListComponent implements OnInit {
-  todos = [];
+export class TodoListComponent implements OnInit, OnChanges {
+  todos: Todo[]  = [];
+  onGoingTodos: Todo[] = [];
+  doneTodos: Todo[] = [];
 
   @Output() editingTodo = new EventEmitter();
-  @Input() isEditing: boolean = false;
+  @Output() selectedMainTodo = new EventEmitter();
+  @Output() closedMainTodo = new EventEmitter();
+  @Input() main_todo: Todo = null;
 
   async deleteTodo(todo){
     // TODO Delete TODO
@@ -29,17 +33,28 @@ export class TodoListComponent implements OnInit {
     let nTodo:Todo = {
       id: null,
       subject: null,
-      autor: 1, // TODO Get Current Autor,
+      autor_id: 1, // TODO Get Current Autor,
+      todo_id: this.main_todo == null ? null : this.main_todo.id, // TODO Get Current Autor,
       created_at: moment().format(),
       updated_at: null,
       description: null,
       deadline:  null,
-      status: 1,
+      status: 11,
       weight:  3,
     };
-    this.todos = [...this.todos, nTodo];
     this.editingTodo.emit(nTodo);
-    console.log(this.todos);
+  }
+
+  selectMainTodo(todo){
+    this.main_todo = todo;
+    this.selectedMainTodo.emit(todo);
+  }
+  closeMainTodo(e){
+    this.main_todo = null;
+    this.closedMainTodo.emit(e);
+  }
+  deleteMainTodo(e){
+
   }
 
   editTodo(todo){
@@ -48,15 +63,31 @@ export class TodoListComponent implements OnInit {
 
   constructor() {}
 
+  ngOnChanges(changes: SimpleChanges | { main_todo: Todo }): void {
+    console.log(changes);
+    this.fetchData();
+  }
+
   ngOnInit() {
     this.fetchData();
   }
   
-  fetchData(){
-    API_Todos.getAllTodos()
-      .then((res) => res.json())
-      .then((res) => {
-        this.todos = res;
-      });
+  async fetchData(){
+    this.todos = [];
+    this.onGoingTodos = [];
+    this.doneTodos = [];
+
+    let r, todo = this.main_todo;
+    if(todo == null){
+      r = await API_Todos.getAllMainTodos();
+    }else{
+      r = await API_Todos.getAllTodosFromMain(todo.id);
+    }
+
+    if(r.ok){
+      this.todos = await r.json();
+      this.onGoingTodos = this.todos.filter(x=> x.status < 90);
+      this.doneTodos = this.todos.filter(x=> x.status > 90);
+    }
   }
 }

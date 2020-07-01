@@ -8,6 +8,7 @@ import { Todo } from './Todo.type'
 export class AppComponent {
   title: string = 'ui';
   edit: Todo | null;
+  main_todo: Todo = null;
 
   editTodo(todo){
     this.edit = todo;

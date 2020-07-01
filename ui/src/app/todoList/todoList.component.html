@@ -1,15 +1,48 @@
-<h2>Liste</h2>
-<button *ngIf="isEditing === false" mat-button color="primary" (click)="createTodo($event)">Neue Todo anlegen</button>
-
-<mat-table [dataSource]="todos">
+<mat-grid-list cols="4" rowHeight="50px">
+    <mat-grid-tile colspan="4" rowspan="2">
+        <div *ngIf="main_todo == null">
+            <h2>Aufgabenliste</h2>
+            <h4> </h4>
+        </div>
+        <div *ngIf="main_todo != null">
+            <h2>Aufgaben der Aufgabenliste: <b>{{main_todo.subject}}</b></h2>
+            <h4>Hier sind/ist {{todos.length}} Aufgabe(n)</h4>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1">
+        <button mat-button color="primary" (click)="createTodo($event)" *ngIf="main_todo == null || main_todo.status < 90">
+            Neue <span *ngIf="main_todo == null">Aufgabenliste</span><span *ngIf="main_todo != null">Aufgabe</span> anlegen
+        </button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1" *ngIf="main_todo != null">
+        <button mat-button color="secondary" (click)="closeMainTodo($event)">
+            Zurück zur Aufgabenliste
+        </button>
+    </mat-grid-tile>
+    <!-- TODO 
+    <mat-grid-tile colspan="1" rowspan="1" *ngIf="main_todo != null && main_todo.status < 90">
+        <button mat-button color="warn" (click)="deleteTodo(main_todo); closeMainTodo()">
+            "{{main_todo.subject}}" löschen 
+        </button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1" *ngIf="main_todo != null && main_todo.status < 90">
+        <button mat-button color="warn" (click)="closeMainTodo($event)">
+            Als erledigt makieren 
+        </button>
+    </mat-grid-tile>-->
+</mat-grid-list>
+<mat-table [dataSource]="onGoingTodos">
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
         <mat-cell *matCellDef="let todo">
-            <button *ngIf="isEditing === false" mat-icon-button color="warn" (click)="deleteTodo(todo)">
+            <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button class="md-raised" color="warn" (click)="deleteTodo(todo)">
               <mat-icon aria-hidden="false" aria-label="Delete Todo">delete</mat-icon>
             </button>
-            <button *ngIf="isEditing === false" mat-icon-button color="primary" (click)="editTodo(todo)">
+            <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button color="primary" (click)="editTodo(todo)">
               <mat-icon aria-hidden="false" aria-label="Edit Todo">create</mat-icon>
+            </button>
+            <button *ngIf="main_todo == null" mat-icon-button color="secondary" (click)="selectMainTodo(todo)">
+              <mat-icon aria-hidden="false" aria-label="Delete Todo">input</mat-icon>
             </button>
         </mat-cell>
     </ng-container>
@@ -41,10 +74,67 @@
 
     <ng-container matColumnDef="autor">
         <mat-header-cell *matHeaderCellDef> Autor </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.autor }} </mat-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.autor_id }} </mat-cell>
     </ng-container>
 
     <!-- Header and Row Declarations -->
     <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-header-row>
     <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-row>
 </mat-table>
+<div *ngIf="onGoingTodos.length === 0" style="width: 100%;text-align: center;">
+    <span>Keine Aufgaben</span>
+    <span *ngIf="main_todo != null"> in dieser Liste</span>
+</div>
+
+<hr>
+<div style="width: 100%; text-align: center;">
+    <h3>Bereits erledigte Aufgaben:</h3>
+</div>
+<mat-table [dataSource]="doneTodos">
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+        <mat-cell *matCellDef="let todo">
+            <button *ngIf="main_todo == null" mat-icon-button color="secondary" (click)="selectMainTodo(todo)">
+              <mat-icon aria-hidden="false" aria-label="Delete Todo">input</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="subject">
+        <mat-header-cell *matHeaderCellDef> Thema </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.subject }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Beschreibung </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.description }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+        <mat-header-cell *matHeaderCellDef> Gewicht </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.weight }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="deadline">
+        <mat-header-cell *matHeaderCellDef> Deadline </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.deadline }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.status }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="autor">
+        <mat-header-cell *matHeaderCellDef> Autor </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.autor_id }} </mat-cell>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-row>
+</mat-table>
+<div *ngIf="doneTodos.length === 0" style="width: 100%;text-align: center;">
+    <span>Keine erledigten Aufgaben</span>
+    <span *ngIf="main_todo != null"> in dieser Liste</span>
+</div>

@@ -3,12 +3,16 @@ import { Todo } from './app/Todo.type';
 const main_url = new URL('http://localhost:8000/api/');
 
 export const API_Todos = {
-  getAllTodos: () =>
+  getAllMainTodos: () =>
     fetch(new URL('todos/', main_url).href, {
       method: 'GET',
     }),
+    getAllTodosFromMain: (todo_id: number) =>
+      fetch(new URL('todos/'+todo_id, main_url).href, {
+        method: 'GET',
+      }),
   getTodo: (id:number) =>
-    fetch(new URL('todos/'+id, main_url).href, {
+    fetch(new URL('todos/single/'+id, main_url).href, {
       method: 'GET',
     }),
   createTodo: (todo:Todo) =>
@@ -24,7 +28,6 @@ export const API_Todos = {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(todo)
     }),
