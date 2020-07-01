@@ -17,6 +17,10 @@ class CreateTodosTable extends Migration
             $table->increments('id');
             $table->string('subject');
             $table->string('description');
+            $table->integer('weight');
+            $table->date('deadline');
+            $table->integer('state');
+            $table->integer('autor');
             $table->timestamps();
         });
     }

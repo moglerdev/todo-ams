@@ -1,37 +1,54 @@
 <h2>Liste</h2>
 
+
 <mat-table [dataSource]="todos">
-  <ng-container matColumnDef="actions">
-    <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
-    <mat-cell *matCellDef="let todo">
-      <button mat-icon-button color="warn">
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+        <mat-cell *matCellDef="let todo">
+            <button mat-icon-button color="warn">
         <mat-icon aria-hidden="false" aria-label="Example home icon"
           >delete</mat-icon
         >
       </button>
-      <button mat-icon-button color="primary">
+            <button mat-icon-button color="primary">
         <mat-icon aria-hidden="false" aria-label="Example home icon"
           >create</mat-icon
         >
       </button>
-    </mat-cell>
-  </ng-container>
+        </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="subject">
-    <mat-header-cell *matHeaderCellDef> Thema </mat-header-cell>
-    <mat-cell *matCellDef="let todo"> {{ todo.subject }} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="subject">
+        <mat-header-cell *matHeaderCellDef> Thema </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.subject }} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="description">
-    <mat-header-cell *matHeaderCellDef> Beschreibung </mat-header-cell>
-    <mat-cell *matCellDef="let todo"> {{ todo.description }} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Beschreibung </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.description }} </mat-cell>
+    </ng-container>
 
-  <!-- Header and Row Declarations -->
-  <mat-header-row
-    *matHeaderRowDef="['actions', 'subject', 'description']"
-  ></mat-header-row>
-  <mat-row
-    *matRowDef="let row; columns: ['actions', 'subject', 'description']"
-  ></mat-row>
+    <ng-container matColumnDef="weight">
+        <mat-header-cell *matHeaderCellDef> Gewicht </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.weight }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="deadline">
+        <mat-header-cell *matHeaderCellDef> Deadline </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.deadline }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.state }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="autor">
+        <mat-header-cell *matHeaderCellDef> Autor </mat-header-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.autor }} </mat-cell>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'state', 'autor']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'state', 'autor']"></mat-row>
 </mat-table>

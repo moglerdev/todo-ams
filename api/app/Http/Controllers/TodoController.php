@@ -17,6 +17,10 @@ class TodoController extends Controller
         $todo = new Todo();
         $todo->subject = $request->subject;
         $todo->description = $request->description;
+        $todo->weight = $request->weight;
+        $todo->deadline = $request->deadline;
+        $todo->state = $request->state;
+        $todo->autor = $request->autor;
         $todo->save();
 
         return response()->json([
@@ -41,6 +45,10 @@ class TodoController extends Controller
             $todo = Todo::find($id);
             $todo->subject = is_null($request->subject) ? $todo->subject : $request->subject;
             $todo->description = is_null($request->description) ? $todo->description : $request->description;
+            $todo->weight = is_null($request->weight) ? $todo->weight : $request->weight;
+            $todo->deadline = is_null($request->deadline) ? $todo->deadline : $request->deadline;
+            $todo->state = is_null($request->state) ? $todo->state : $request->state;
+            $todo->autor = is_null($request->autor) ? $todo->autor : $request->autor;
             $todo->save();
 
             return response()->json([
