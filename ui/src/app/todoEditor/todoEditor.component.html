@@ -1,0 +1,60 @@
+<h2>Editor</h2>
+
+<mat-grid-list cols="6" rowHeight="100px">
+    <mat-grid-tile colspan="3" rowspan="1" style.background="green">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Erstellt</mat-label>
+            <input disabled matInput placeholder="Schnell beschreibender Titel?">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1" style.background="green">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Geändert am</mat-label>
+            <input disabled matInput placeholder="Schnell beschreibender Titel?">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4" rowspan="1" style.background="green">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Titel</mat-label>
+            <input matInput placeholder="Schnell beschreibender Titel?">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="1" style.background="green">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Gewicht</mat-label>
+            <mat-select>
+                <mat-option value="1">unwichtig</mat-option>
+                <mat-option value="2">kaum wichtig</mat-option>
+                <mat-option value="3">normal</mat-option>
+                <mat-option value="4">wichtig</mat-option>
+                <mat-option value="5">sehr wichtig</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4" rowspan="2" style.background="green">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Beschreibung</mat-label>
+            <textarea matInput placeholder="Um was geht es genau in dieser Todo?" style="height: 160px; resize: none;"></textarea>
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="1" style.background="green">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Deadline</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Bis wann muss die Todo erledigt sein?">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="1" style.background="green">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select>
+                <mat-option value="1">Offen</mat-option>
+                <mat-option value="2">in Bearbeitung</mat-option>
+                <mat-option value="3">ereldigt</mat-option>
+                <mat-option value="4">verspätet erledigt</mat-option>
+                <mat-option value="5">abgebrochen</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-grid-tile>
+</mat-grid-list>
