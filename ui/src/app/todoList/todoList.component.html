@@ -1,20 +1,16 @@
 <h2>Liste</h2>
-
+<button *ngIf="isEditing === false" mat-button color="primary" (click)="createTodo($event)">Neue Todo anlegen</button>
 
 <mat-table [dataSource]="todos">
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
         <mat-cell *matCellDef="let todo">
-            <button mat-icon-button color="warn" (click)="deleteTodo(todo)">
-        <mat-icon aria-hidden="false" aria-label="Delete Todo"
-          >delete</mat-icon
-        >
-      </button>
-            <button mat-icon-button color="primary" (click)="editTodo(todo)">
-        <mat-icon aria-hidden="false" aria-label="Edit Todo"
-          >create</mat-icon
-        >
-      </button>
+            <button *ngIf="isEditing === false" mat-icon-button color="warn" (click)="deleteTodo(todo)">
+              <mat-icon aria-hidden="false" aria-label="Delete Todo">delete</mat-icon>
+            </button>
+            <button *ngIf="isEditing === false" mat-icon-button color="primary" (click)="editTodo(todo)">
+              <mat-icon aria-hidden="false" aria-label="Edit Todo">create</mat-icon>
+            </button>
         </mat-cell>
     </ng-container>
 
@@ -38,9 +34,9 @@
         <mat-cell *matCellDef="let todo"> {{ todo.deadline }} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="state">
+    <ng-container matColumnDef="status">
         <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.state }} </mat-cell>
+        <mat-cell *matCellDef="let todo"> {{ todo.status }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="autor">
@@ -49,6 +45,6 @@
     </ng-container>
 
     <!-- Header and Row Declarations -->
-    <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'state', 'autor']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'state', 'autor']"></mat-row>
+    <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-row>
 </mat-table>

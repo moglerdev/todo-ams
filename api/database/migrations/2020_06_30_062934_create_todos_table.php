@@ -15,12 +15,12 @@ class CreateTodosTable extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('autor')->index();
             $table->string('subject');
-            $table->string('description');
-            $table->integer('weight');
-            $table->date('deadline');
-            $table->integer('state');
-            $table->integer('autor');
+            $table->integer('status')->default(3);
+            $table->string('description')->nullable(true);
+            $table->integer('weight')->nullable(true);
+            $table->date('deadline')->nullable(true);
             $table->timestamps();
         });
     }

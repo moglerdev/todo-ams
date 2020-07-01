@@ -1,3 +1,5 @@
+import { Todo } from './app/Todo.type';
+
 const main_url = new URL('http://localhost:8000/api/');
 
 export const API_Todos = {
@@ -5,11 +7,11 @@ export const API_Todos = {
     fetch(new URL('todos/', main_url).href, {
       method: 'GET',
     }),
-  getTodo: (id) =>
+  getTodo: (id:number) =>
     fetch(new URL('todos/'+id, main_url).href, {
       method: 'GET',
     }),
-  createTodo: (todo) =>
+  createTodo: (todo:Todo) =>
     fetch(new URL('todos/', main_url).href, {
       method: 'POST',
       headers: {
@@ -17,16 +19,16 @@ export const API_Todos = {
       },
       body: JSON.stringify(todo)
     }),
-  updateTodo: (id, todo) =>
+  updateTodo: (id:number, todo:Todo) =>
     fetch(new URL('todos/'+id, main_url).href, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: JSON.stringify(todo)
     }),
-  deleteTodo: (id) =>
+  deleteTodo: (id:number) =>
     fetch(new URL('todos/'+id, main_url).href, {
       method: 'DELETE',
     }),

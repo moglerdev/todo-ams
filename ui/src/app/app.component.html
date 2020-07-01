@@ -4,6 +4,6 @@
 
 <app-todoEditor *ngIf="edit != null" [todo]="edit" (closeTodo)="closeTodo($event)"></app-todoEditor>
 
-<app-todoList (editingTodo)="editTodo($event)"> </app-todoList>
+<app-todoList *ngIf="edit == null" (editingTodo)="editTodo($event)"> </app-todoList>
 
 <router-outlet></router-outlet>

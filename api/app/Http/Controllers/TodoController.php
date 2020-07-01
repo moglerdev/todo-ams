@@ -19,7 +19,7 @@ class TodoController extends Controller
         $todo->description = $request->description;
         $todo->weight = $request->weight;
         $todo->deadline = $request->deadline;
-        $todo->state = $request->state;
+        $todo->status = $request->status;
         $todo->autor = $request->autor;
         $todo->save();
 
@@ -48,7 +48,7 @@ class TodoController extends Controller
             $todo->description = is_null($request->description) ? $todo->description : $request->description;
             $todo->weight = is_null($request->weight) ? $todo->weight : $request->weight;
             $todo->deadline = is_null($request->deadline) ? $todo->deadline : $request->deadline;
-            $todo->state = is_null($request->state) ? $todo->state : $request->state;
+            $todo->status = is_null($request->status) ? $todo->status : $request->status;
             $todo->autor = is_null($request->autor) ? $todo->autor : $request->autor;
             $todo->save();
 

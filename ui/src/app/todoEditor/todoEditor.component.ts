@@ -47,13 +47,21 @@ export class TodoEditorComponent implements OnInit {
   async saveTodo(e){
     // TODO If Todo.ID == 0 then create new
     //TODO Save TODO
+    let r;
+    if(this.todo.id == null){
+      r = await API_Todos.createTodo(this.todo);
 
-    let r = await API_Todos.updateTodo(this.todo.id, this.todo);
+    }else{
+      r = await API_Todos.updateTodo(this.todo.id, this.todo);
+
+    }
+
 
     if(!r.ok){
       alert("Fehler beim Speichern!");
+    }else{
+      this.closeTodo.emit(e);
     }
-    this.closeTodo.emit(e);
   }
 
   constructor() {

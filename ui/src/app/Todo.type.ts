@@ -1,11 +1,11 @@
 export type Todo = {
     id: number | null,
-    subject: string,
-    description: string,
-    deadline: string | Date,
-    state: string | number,
+    subject: string | null,
+    description: string | null,
+    deadline: string | Date | null,
+    status: string | number,
     weight: string | number,
     autor: string | number,
-    created_at: string | Date | undefined,
-    updated_at: string | Date | undefined
+    created_at: string | Date,
+    updated_at: string | Date | null 
 }
