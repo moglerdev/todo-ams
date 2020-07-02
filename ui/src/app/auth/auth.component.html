@@ -1,0 +1,44 @@
+<mat-grid-list cols="4" rowHeight="50px">
+    <mat-grid-tile colspan="4" rowspan="2">
+        <h2>Anmeldung</h2>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="6" rowHeight="80px">
+    <mat-grid-tile colspan="6" rowspan="1" *ngIf="isRegister">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Benutzername:</mat-label>
+            <input matInput required type="user" placeholder="Name deines Benutzers" [value]="user.name" (input)="user.name = $event.target.value">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="6" rowspan="1">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Email:</mat-label>
+            <input matInput required type="email" placeholder="Deine E-Mail Addresse" [value]="user.email" (input)="user.email = $event.target.value">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="isRegister ? 3 : 6" rowspan="1">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Passwort:</mat-label>
+            <input matInput required type="password" placeholder="Dein persönliches Passwort" [value]="user.password" (input)="user.password = $event.target.value">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1" *ngIf="isRegister">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Passwort widerholen:</mat-label>
+            <input matInput required type="password" placeholder="Persönliches Passwort bestätigen" [value]="user.confirm_password" (input)="user.confirm_password = $event.target.value">
+        </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1">
+        <button mat-raised-button color="primary" (click)="login($event)">
+            <span *ngIf="isRegister">Neune Account erstellen</span>
+            <span *ngIf="!isRegister">Anmelden</span>
+        </button>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspan="1">
+        <button mat-raised-button color="accent" (click)="isRegister = !isRegister">
+            <span *ngIf="isRegister">Bereits ein Account?</span>
+            <span *ngIf="!isRegister">Doch keinen Account?</span>
+        </button>
+    </mat-grid-tile>
+</mat-grid-list>

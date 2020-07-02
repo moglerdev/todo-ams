@@ -1,9 +1,18 @@
 <mat-toolbar>
-    <span>My Application</span>
+    <span>Todo-Asmus</span>
+    <span class="menu-spacer"></span>
+    <button mat-icon-button aria-label="Logout from your Account" *ngIf="isAuth" (click)="logout($event)">
+        <mat-icon>logout</mat-icon>
+    </button>
 </mat-toolbar>
 
-<app-todoEditor *ngIf="edit != null" [todo]="edit" (closeTodo)="closeTodo($event)"></app-todoEditor>
+<div *ngIf="!isAuth">
+    <app-auth (onAuth)="isAuth = true;"></app-auth>
+</div>
+<div *ngIf="isAuth">
+    <app-todoEditor *ngIf="edit != null" [todo]="edit" (closeTodo)="closeTodo($event)"></app-todoEditor>
 
-<app-todoList *ngIf="edit == null" [main_todo]="main_todo" (editingTodo)="editTodo($event)" (selectedMainTodo)="main_todo = $event" (closedMainTodo)="main_todo = null"> </app-todoList>
+    <app-todoList *ngIf="edit == null" [main_todo]="main_todo" (editingTodo)="editTodo($event)" (selectedMainTodo)="main_todo = $event" (closedMainTodo)="main_todo = null"> </app-todoList>
+</div>
 
 <router-outlet></router-outlet>

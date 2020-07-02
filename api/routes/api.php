@@ -35,7 +35,7 @@ Route::group([
 Route::group([
     'prefix' => 'oauth'
 ], function () {
-    Route::get("login", "AuthController@login");
+    Route::post("login", "AuthController@login");
     Route::post("register", "AuthController@register");
   
     Route::group([

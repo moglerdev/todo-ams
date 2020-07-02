@@ -50,9 +50,10 @@ import {MatTreeModule} from '@angular/material/tree';
 
 import { TodoListComponent } from './todoList/todoList.component';
 import { TodoEditorComponent } from './todoEditor/todoEditor.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
-  declarations: [AppComponent, TodoListComponent, TodoEditorComponent],
+  declarations: [AppComponent, TodoListComponent, TodoEditorComponent, AuthComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
