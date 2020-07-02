@@ -31,19 +31,46 @@
         </button>
     </mat-grid-tile>-->
 </mat-grid-list>
+
+
+<table class="table" matSort (matSortChange)="sortTodo($event)">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th mat-sort-header="subject">Thema</th>
+            <th mat-sort-header="description">Beschreibung</th>
+            <th mat-sort-header="weight">Gewichtung</th>
+            <th mat-sort-header="deadline">Deadline</th>
+            <th mat-sort-header="status">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let todo of sortedTodos">
+            <td>
+
+                <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button class="md-raised" color="warn" (click)="deleteTodo(todo)">
+                    <mat-icon aria-hidden="false" aria-label="Delete Todo">delete</mat-icon>
+                </button>
+                <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button color="primary" (click)="editTodo(todo)">
+                    <mat-icon aria-hidden="false" aria-label="Edit Todo">create</mat-icon>
+                </button>
+                <button *ngIf="main_todo == null" mat-icon-button color="secondary" (click)="selectMainTodo(todo)">
+                    <mat-icon aria-hidden="false" aria-label="Delete Todo">input</mat-icon>
+                </button>
+            </td>
+            <td>{{ todo.subject }} </td>
+            <td>{{ todo.description }} </td>
+            <td>{{ todo.weight }} </td>
+            <td>{{ todo.deadline }} </td>
+            <td>{{ todo.status }} </td>
+        </tr>
+    </tbody>
+</table>
+<!--
 <mat-table [dataSource]="onGoingTodos">
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
         <mat-cell *matCellDef="let todo">
-            <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button class="md-raised" color="warn" (click)="deleteTodo(todo)">
-              <mat-icon aria-hidden="false" aria-label="Delete Todo">delete</mat-icon>
-            </button>
-            <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button color="primary" (click)="editTodo(todo)">
-              <mat-icon aria-hidden="false" aria-label="Edit Todo">create</mat-icon>
-            </button>
-            <button *ngIf="main_todo == null" mat-icon-button color="secondary" (click)="selectMainTodo(todo)">
-              <mat-icon aria-hidden="false" aria-label="Delete Todo">input</mat-icon>
-            </button>
         </mat-cell>
     </ng-container>
 
@@ -77,7 +104,7 @@
         <mat-cell *matCellDef="let todo"> {{ todo.user_id }} </mat-cell>
     </ng-container>
 
-    <!-- Header and Row Declarations -->
+    <!-- Header and Row Declarations --
     <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-header-row>
     <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-row>
 </mat-table>
@@ -85,7 +112,7 @@
     <span>Keine Aufgaben</span>
     <span *ngIf="main_todo != null"> in dieser Liste</span>
 </div>
-
+-->
 <hr>
 <div style="width: 100%; text-align: center;">
     <h3>Bereits erledigte Aufgaben:</h3>

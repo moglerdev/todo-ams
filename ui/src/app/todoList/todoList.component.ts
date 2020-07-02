@@ -3,6 +3,11 @@ import { API_Todos } from '../../api';
 import { Todo } from '../Todo.type';
 
 import * as moment from 'moment';
+import { Sort } from '@angular/material/sort';
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
 
 @Component({
   selector: 'app-todoList',
@@ -11,6 +16,10 @@ import * as moment from 'moment';
 })
 export class TodoListComponent implements OnInit, OnChanges {
   todos: Todo[]  = [];
+
+  sortedTodos: Todo[] = [];
+
+
   onGoingTodos: Todo[] = [];
   doneTodos: Todo[] = [];
 
@@ -27,6 +36,26 @@ export class TodoListComponent implements OnInit, OnChanges {
     }else{
       this.todos = this.todos.filter(x=> x.id !== todo.id);
     }
+  }
+
+  sortTodo(sort: Sort){
+    const data = this.onGoingTodos.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedTodos = data;
+      return;
+    }
+
+    this.sortedTodos = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'subject': return compare(a.subject, b.subject, isAsc);
+        case 'description': return compare(a.description, b.description, isAsc);
+        case 'weight': return compare(a.weight, b.weight, isAsc);
+        case 'deadline': return compare(a.deadline, b.deadline, isAsc);
+        case 'status': return compare(a.status, b.status, isAsc);
+        default: return 0;
+      }
+    });
   }
 
   createTodo(e){
@@ -76,6 +105,7 @@ export class TodoListComponent implements OnInit, OnChanges {
     this.todos = [];
     this.onGoingTodos = [];
     this.doneTodos = [];
+    this.sortedTodos = [];
 
     let r, todo = this.main_todo;
     if(todo == null){
@@ -87,7 +117,11 @@ export class TodoListComponent implements OnInit, OnChanges {
     if(r.ok){
       this.todos = await r.json();
       this.onGoingTodos = this.todos.filter(x=> x.status < 90);
+      this.sortedTodos = this.onGoingTodos;
       this.doneTodos = this.todos.filter(x=> x.status > 90);
     }
   }
 }
+
+
+
