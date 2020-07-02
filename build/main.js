@@ -394,7 +394,7 @@ const API_OAuth = {
     }),
 };
 const API_Todos = {
-    getAllMainTodos: () => fetch(new URL('todos/', main_url).href, {
+    getAllMainTodos: () => fetch(new URL('todos', main_url).href, {
         method: 'GET',
         headers: getHeaders()
     }),
@@ -406,7 +406,7 @@ const API_Todos = {
         method: 'GET',
         headers: getHeaders()
     }),
-    createTodo: (todo) => fetch(new URL('todos/', main_url).href, {
+    createTodo: (todo) => fetch(new URL('todos', main_url).href, {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify(todo)
