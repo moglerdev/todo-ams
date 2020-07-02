@@ -68,7 +68,7 @@ export const API_OAuth = {
 
 export const API_Todos = {
   getAllMainTodos: () =>
-    fetch(new URL('todos/', main_url).href, {
+    fetch(new URL('todos', main_url).href, {
       method: 'GET',
       headers: getHeaders()
     }),
@@ -83,7 +83,7 @@ export const API_Todos = {
       headers: getHeaders()
     }),
   createTodo: (todo: Todo) =>
-    fetch(new URL('todos/', main_url).href, {
+    fetch(new URL('todos', main_url).href, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(todo)
