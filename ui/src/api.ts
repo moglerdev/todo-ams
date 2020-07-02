@@ -59,8 +59,8 @@ export const API_OAuth = {
   signOut: async () => {
     oauth_session = null;
     let r = await API_OAuth.logout();
+    window.localStorage.removeItem('token');
     if (r.ok) {
-      window.localStorage.removeItem('token');
       return true;
     }
     return false;
