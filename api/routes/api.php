@@ -25,9 +25,9 @@ Route::group([
     'middleware' => 'auth:api'
 ], function () {
     Route::get('', 'TodoController@getAllMainTodos');
-    Route::get('{main_todo_id}', 'TodoController@getAllTodosFromMain');
+    Route::get('{id}', 'TodoController@getAllTodosFromMain');
     Route::get('single/{id}', 'TodoController@getTodo');
-    Route::post('', 'TodoController@createTodo');
+    Route::post('','TodoController@createTodo');
     Route::put('{id}', 'TodoController@updateTodo');
     Route::delete('{id}', 'TodoController@deleteTodo');  
 });
