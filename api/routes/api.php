@@ -25,4 +25,8 @@ Route::post('todos', 'TodoController@createTodo');
 Route::put('todos/{id}', 'TodoController@updateTodo');
 Route::delete('todos/{id}', 'TodoController@deleteTodo');
 
-Route::post('auth/register', 'AuthController@register');
+Route::post("login", "AuthController@login");
+Route::post("register", "AuthController@register");
+Route::middleware("auth:api")->get("/user", function (Request $request) {
+return $request->user();
+});
