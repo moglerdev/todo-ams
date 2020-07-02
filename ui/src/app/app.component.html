@@ -6,6 +6,10 @@
     </button>
 </mat-toolbar>
 
+<div *ngIf="isFetching" class="loading">
+    <h2>Loading</h2>
+</div>
+
 <div *ngIf="!isAuth">
     <app-auth (onAuth)="isAuth = true;"></app-auth>
 </div>

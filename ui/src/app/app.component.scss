@@ -5,3 +5,15 @@ body {
 .menu-spacer {
     flex: 1 1 auto;
 }
+
+.loading {
+    position: absolute;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1000;
+    text-align: center;
+    align-content: center;
+}

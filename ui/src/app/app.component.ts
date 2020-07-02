@@ -11,6 +11,7 @@ export class AppComponent {
   edit: Todo | null;
   main_todo: Todo = null;
   isAuth: boolean = false;
+  isFetching: boolean = true;
 
   constructor(){
     this.testAuth();
@@ -18,6 +19,7 @@ export class AppComponent {
 
   async testAuth(){
     this.isAuth = await API_OAuth.isAuth();
+    this.isFetching = false;
   }
 
   editTodo(todo){
@@ -30,6 +32,7 @@ export class AppComponent {
 
   async logout(e){
     let r = await API_OAuth.signOut();
+    this.isFetching = false;
     this.isAuth = false;
   }
 }
