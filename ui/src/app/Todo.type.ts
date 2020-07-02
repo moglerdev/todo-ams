@@ -1,6 +1,6 @@
 export type Todo = {
     id: number | null,
-    autor_id: number,
+    user_id: number,
     todo_id: number | null,
     subject: string | null,
     description: string | null,

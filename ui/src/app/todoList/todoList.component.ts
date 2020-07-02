@@ -33,7 +33,7 @@ export class TodoListComponent implements OnInit, OnChanges {
     let nTodo:Todo = {
       id: null,
       subject: null,
-      autor_id: 1, // TODO Get Current Autor,
+      user_id: 1, // TODO Get Current Autor,
       todo_id: this.main_todo == null ? null : this.main_todo.id, // TODO Get Current Autor,
       created_at: moment().format(),
       updated_at: null,

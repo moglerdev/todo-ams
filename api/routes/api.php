@@ -18,15 +18,32 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('todos', 'TodoController@getAllMainTodos');
-Route::get('todos/{main_todo_id}', 'TodoController@getAllTodosFromMain');
-Route::get('todos/single/{id}', 'TodoController@getTodo');
-Route::post('todos', 'TodoController@createTodo');
-Route::put('todos/{id}', 'TodoController@updateTodo');
-Route::delete('todos/{id}', 'TodoController@deleteTodo');
 
-Route::post("login", "AuthController@login");
-Route::post("register", "AuthController@register");
-Route::middleware("auth:api")->get("/user", function (Request $request) {
-return $request->user();
+
+Route::group([
+    'prefix' => 'todos',
+    'middleware' => 'auth:api'
+], function () {
+    Route::get('', 'TodoController@getAllMainTodos');
+    Route::get('{main_todo_id}', 'TodoController@getAllTodosFromMain');
+    Route::get('single/{id}', 'TodoController@getTodo');
+    Route::post('', 'TodoController@createTodo');
+    Route::put('{id}', 'TodoController@updateTodo');
+    Route::delete('{id}', 'TodoController@deleteTodo');  
+});
+
+Route::group([
+    'prefix' => 'oauth'
+], function () {
+    Route::get("login", "AuthController@login");
+    Route::post("register", "AuthController@register");
+  
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('logout', 'AuthController@logout');
+        Route::get("user", function (Request $request) {
+            return $request->user();
+            });
+    });
 });

@@ -43,8 +43,7 @@ return [
 
         'api' => [
             'driver' => 'passport',
-            'provider' => App\Users::class,
-            'hash' => false,
+            'provider' => 'users',
         ],
     ],
 
