@@ -4,7 +4,7 @@ export type Todo = {
     todo_id: number | null,
     subject: string | null,
     description: string | null,
-    deadline: string | Date | null,
+    deadline: string | null,
     status: string | number,
     weight: string | number,
     created_at: string | Date,
