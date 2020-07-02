@@ -1,7 +1,7 @@
 import { Todo } from './app/Todo.type';
 import { async } from 'rxjs/internal/scheduler/async';
 
-const main_url = new URL('http://localhost:8000/api/');
+const main_url = new URL('server.php/api/', window.location.host);
 
 var oauth_session = null;
 
