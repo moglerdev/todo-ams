@@ -334,7 +334,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_Todos", function() { return API_Todos; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
-const main_url = new URL('server.php/api/', window.location.origin);
+const main_url = new URL('public/api/', window.location.origin);
 var oauth_session = null;
 const getHeaders = () => {
     let heads = new Headers();

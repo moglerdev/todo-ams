@@ -12,7 +12,7 @@ use Laravel\Passport\Http\Controllers\AccessTokenController;
 
 class AuthController extends Controller
 {
-    /**
+    /*+
     login api *
     @return \Illuminate\Http\Response */
     public function login(Request $request){ 
