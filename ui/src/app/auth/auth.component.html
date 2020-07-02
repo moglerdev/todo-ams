@@ -25,13 +25,13 @@
     </mat-grid-tile>
     <mat-grid-tile colspan="3" rowspan="1" *ngIf="isRegister">
         <mat-form-field class="full-width" appearance="fill">
-            <mat-label>Passwort widerholen:</mat-label>
+            <mat-label>Passwort wiederholen:</mat-label>
             <input matInput required type="password" placeholder="Persönliches Passwort bestätigen" [value]="user.confirm_password" (input)="user.confirm_password = $event.target.value">
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="3" rowspan="1">
         <button mat-raised-button color="primary" (click)="login($event)">
-            <span *ngIf="isRegister">Neune Account erstellen</span>
+            <span *ngIf="isRegister">Neuen Account erstellen</span>
             <span *ngIf="!isRegister">Anmelden</span>
         </button>
     </mat-grid-tile>

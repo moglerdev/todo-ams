@@ -1,7 +1,7 @@
 import { Todo } from './app/Todo.type';
-import { async } from 'rxjs/internal/scheduler/async';
 
-const main_url = new URL('public/api/', window.location.origin);
+//const main_url = new URL('public/api/', window.location.origin);
+const main_url = new URL('http://127.0.0.1:8000/api/');
 
 var oauth_session = null;
 
@@ -17,15 +17,31 @@ const getHeaders = () => {
 
 export const API_OAuth = {
   isAuth: async () => {
-    if (oauth_session == null) return null;
+    if (oauth_session == null){
+      let t = window.localStorage.getItem('token')
+      if(t == null){
+        return false;
+      }
+      try{
+        oauth_session = JSON.parse(t);
+      }
+      catch(ex){
+        return false;
+      }
+    }
     let r = await fetch(new URL('oauth/user', main_url).href, { method: 'GET', headers: getHeaders() });
-    return r.ok;
+
+    if(r.ok){
+      return true;
+    }
+    window.localStorage.removeItem('token');
   },
   signIn: async (user) => {
     oauth_session = null;
     let r = await API_OAuth.login(user);
     if (r.ok) {
       oauth_session = await r.json();
+      window.localStorage.setItem('token', JSON.stringify(oauth_session));
       return true;
     }
     return false;
@@ -35,6 +51,7 @@ export const API_OAuth = {
     let r = await API_OAuth.register(user);
     if (r.ok) {
       oauth_session = await r.json();
+      window.localStorage.setItem('token', JSON.stringify(oauth_session));
       return true;
     }
     return false;
@@ -43,6 +60,7 @@ export const API_OAuth = {
     oauth_session = null;
     let r = await API_OAuth.logout();
     if (r.ok) {
+      window.localStorage.removeItem('token');
       return true;
     }
     return false;

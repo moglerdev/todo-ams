@@ -12,6 +12,14 @@ export class AppComponent {
   main_todo: Todo = null;
   isAuth: boolean = false;
 
+  constructor(){
+    this.testAuth();
+  }
+
+  async testAuth(){
+    this.isAuth = await API_OAuth.isAuth();
+  }
+
   editTodo(todo){
     this.edit = todo;
   }
