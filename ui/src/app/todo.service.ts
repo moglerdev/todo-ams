@@ -8,13 +8,22 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 })
 export class TodoService {
   private isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private isFetching: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);;
+  private isFetching: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  private main_todo: Todo = null;
+  private main_todo: BehaviorSubject<Todo | null> = new BehaviorSubject<Todo | null>(null);;
   private todos: Todo[] = [];
 
-  getTodos(): Todo[]{
-    return this.todos;
+  getTodos(): Observable<Todo[]> {
+    return of(this.todos);
+  }
+
+  getMainTodo(): Observable<Todo> {
+    return this.main_todo.asObservable();
+  }
+  setMainTodo(mainTodo: Todo) : void{
+    this.todos.splice(0, this.todos.length);
+    this.fetchTodos(mainTodo);
+    this.main_todo.next(mainTodo);
   }
 
   getAuth(): Observable<boolean> {
@@ -34,18 +43,25 @@ export class TodoService {
    }
 
   async testAuth(){
+    this.isFetching.next(true);
     this.isAuth.next(await API_OAuth.isAuth());
     this.isFetching.next(false);
   }
 
   async logout(e){
+    this.isFetching.next(true);
     let r = await API_OAuth.signOut();
     this.isAuth.next(false);
     this.isFetching.next(false);
   }
 
-  async fetchTodos(){
-    let r, todo = this.main_todo;
+  async fetchTodos(mainTodo: Todo){
+    this.isFetching.next(true);
+    let r, todo = mainTodo;
+    console.log(mainTodo);
+    if(todo === undefined){
+      todo = this.main_todo.getValue();
+    }
     if(todo == null){
       r = await API_Todos.getAllMainTodos();
     }else{
@@ -53,9 +69,12 @@ export class TodoService {
     }
 
     if(r.ok){
-      this.todos = await r.json();
+      this.todos.push(await r.json());
       //this.onGoingTodos = this.todos.filter(x=> x.status < 90);
       //this.doneTodos = this.todos.filter(x=> x.status > 90);
     }
+
+    this.isFetching.next(false);
+    return r;
   }
 }

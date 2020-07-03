@@ -1,5 +1,3 @@
-<p>todo works!</p>
-
 <app-todoEditor *ngIf="edit != null" [todo]="edit" (closeTodo)="closeTodo($event)"></app-todoEditor>
 
-<app-todoList *ngIf="edit == null" [main_todo]="main_todo" (editingTodo)="editTodo($event)" (selectedMainTodo)="main_todo = $event" (closedMainTodo)="main_todo = null"> </app-todoList>
+<app-todoList *ngIf="edit == null" (editingTodo)="editTodo($event)" (selectedMainTodo)="main_todo = $event" (closedMainTodo)="main_todo = null"> </app-todoList>

@@ -5,6 +5,7 @@ import { Todo } from '../Todo.type';
 import * as moment from 'moment';
 import { Sort } from '@angular/material/sort';
 import { TodoService } from '../todo.service';
+import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -15,14 +16,10 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
   templateUrl: './todoList.component.html',
   styleUrls: ['./todoList.component.css'],
 })
-export class TodoListComponent implements OnInit, OnChanges {
+export class TodoListComponent implements OnInit {
   todos: Todo[]  = [];
-
-  @Output() editingTodo = new EventEmitter();
-  @Output() selectedMainTodo = new EventEmitter();
-  @Output() closedMainTodo = new EventEmitter();
-  @Input() main_todo: Todo = null;
-
+  main_todo: Todo = null;
+  
   async deleteTodo(todo){
     // TODO Delete TODO
     let r = await API_Todos.deleteTodo(todo.id);
@@ -53,53 +50,28 @@ export class TodoListComponent implements OnInit, OnChanges {
     });
   }
 
-  createTodo(e){
-    let nTodo:Todo = {
-      id: null,
-      subject: null,
-      user_id: 1, // TODO Get Current Autor,
-      todo_id: this.main_todo == null ? null : this.main_todo.id, // TODO Get Current Autor,
-      created_at: moment().format(),
-      updated_at: null,
-      description: null,
-      deadline:  null,
-      status: 11,
-      weight:  3,
-    };
-    this.editingTodo.emit(nTodo);
+  selectMainTodo(todo) {
+    this.todoService.setMainTodo(todo[0]);
   }
 
-  selectMainTodo(todo){
-    this.main_todo = todo;
-    this.selectedMainTodo.emit(todo);
-  }
-  closeMainTodo(e){
-    this.main_todo = null;
-    this.closedMainTodo.emit(e);
-  }
-  deleteMainTodo(e){
-
-  }
-
-  editTodo(todo){
-    this.editingTodo.emit(todo);
+  closeMainTodo(){
+    this.todoService.setMainTodo(null);
   }
 
   constructor(public todoService: TodoService) {
 
   }
 
-  ngOnChanges(changes: SimpleChanges | { main_todo: Todo }): void {
-    console.log(changes);
-    this.fetchData();
+  ngOnInit() {
+    this.getTodos();
+    this.todoService.getMainTodo().subscribe(mainTodo => this.main_todo = mainTodo);
   }
 
-  ngOnInit() {
-    this.fetchData();
-  }
-  
-  async fetchData(){
-  }
+  async getTodos(){
+    let r = await this.todoService.fetchTodos();
+
+    this.todoService.getTodos().subscribe(todos => this.todos = todos);
+  }  
 }
 
 
