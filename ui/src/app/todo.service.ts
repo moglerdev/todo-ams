@@ -74,10 +74,10 @@ export class TodoService {
   }
 
   addFetch(){
-    //this.isFetching.next(true);
+    this.isFetching.next(true);
   }
   removeFetch(){
-    //this.isFetching.next(false);
+    this.isFetching.next(false);
   }
 
   async testAuth(){
@@ -95,17 +95,17 @@ export class TodoService {
 
   async fetchTodos(mainTodo: Todo | undefined | null = undefined){
     this.addFetch();
-    this.todos.splice(0, this.todos.length);
     let r, todo = mainTodo;
     if(todo === undefined){
-      todo = this.main_todo.getValue();
+      todo = this.main_todo.getValue() || null;
     }
     if(todo == null){
       r = await API_Todos.getAllMainTodos();
     }else{
       r = await API_Todos.getAllTodosFromMain(todo.id);
     }
-
+    this.todos.splice(0, this.todos.length);
+    console.log(this.todos);
     if(r.ok){
       let l = await r.json();
       console.log(l);

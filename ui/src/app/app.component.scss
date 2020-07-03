@@ -14,12 +14,19 @@ body {
 
 .loading {
     position: absolute;
-    top: 80px;
+    top: 0px;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: white;
+    background-color: rgba(0,0,0,0.8);
     z-index: 1000;
     text-align: center;
     align-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading * {
+  color: white;
 }

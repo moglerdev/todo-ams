@@ -9,6 +9,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 
 import * as moment from 'moment';
 import { TodoService } from '../todo.service';
+import { FormControl } from '@angular/forms';
 
 export const GERMAN_FORMAT = {
   parse: {
@@ -42,8 +43,9 @@ export const GERMAN_FORMAT = {
 })
 export class TodoEditorComponent implements OnInit {
   todo: Todo = null;
-
+  deadline = new FormControl();
   saveTodo(e){
+    this.todo.deadline = this.deadline.value;
     this.todoService.saveEdit({...this.todo});
   }
 
@@ -56,6 +58,7 @@ export class TodoEditorComponent implements OnInit {
 
   ngOnInit() {
     this.todoService.getEdit().subscribe(edit => {
+      this.deadline = new FormControl(moment(edit.deadline));
       this.todo = edit;
     });
   }

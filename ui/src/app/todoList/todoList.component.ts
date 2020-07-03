@@ -6,6 +6,7 @@ import { Sort } from '@angular/material/sort';
 import { TodoService } from '../todo.service';
 import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
+import { stringify } from '@angular/compiler/src/util';
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -81,6 +82,33 @@ export class TodoListComponent implements OnInit {
     this.todoService.setEdit(e);
   }
 
+  calcWeight(todo: Todo) : number{
+    let w: number;
+    if(typeof todo.weight === "string"){
+        w = parseInt(todo.weight);
+    }else{
+      w = todo.weight;
+    }
+
+    if(todo.deadline != null){
+      let c = moment(todo.created_at);
+      let d = moment(todo.deadline);
+      return c.diff(d, 'days');
+    }
+    else
+      return w;
+  }
+
+  getGewicht(todo): string{
+    switch(todo) {
+      case 0: return "unwichtig";
+      case 1: return "kaum wichtig";
+      case 2: return "normal";
+      case 3: return "wichtig";
+      case 4: return "sehr wichtig";
+    }
+  }
+
   ngOnInit() {
     this.getTodos();
     this.todoService.getMainTodo().subscribe(mainTodo => this.main_todo = mainTodo);
@@ -90,8 +118,7 @@ export class TodoListComponent implements OnInit {
     let r = await this.todoService.fetchTodos();
 
     this.todoService.getTodos().subscribe(todos => {
-      this.todos = [...todos];
-      console.log(this.todos);
+      this.todos = todos;
     });
   }
 }

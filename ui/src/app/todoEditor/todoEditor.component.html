@@ -46,7 +46,8 @@
     <mat-grid-tile colspan="2" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Deadline</mat-label>
-            <input matInput [matDatepicker]="picker_deadline" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.deadline" (input)="todo.subject = $event.target.value">
+            <input matInput [matDatepicker]="picker_deadline"
+             placeholder="Bis wann muss die Todo erledigt sein?" [(formControlName)]="deadline" />
             <mat-datepicker-toggle matSuffix [for]="picker_deadline"></mat-datepicker-toggle>
             <mat-datepicker #picker_deadline></mat-datepicker>
         </mat-form-field>
