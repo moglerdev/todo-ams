@@ -8,16 +8,15 @@ import { TodoService } from '../todo.service';
   styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent implements OnInit {
-  edit: Todo = null;
-  main_todo: Todo = null;
-  
-  editTodo(todo){
-    this.edit = todo;
-  }
+  isEdit: boolean = false;
 
   constructor(public todoService: TodoService) { }
 
   ngOnInit(): void {
+    this.todoService.getEdit().subscribe(t => {
+      this.isEdit = t != null;
+      console.log(t);
+    });
   }
 
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { API_Todos } from '../../api';
 import { Todo } from '../Todo.type';
-
 import * as moment from 'moment';
 import { Sort } from '@angular/material/sort';
 import { TodoService } from '../todo.service';
 import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
+import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -19,7 +19,7 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
 export class TodoListComponent implements OnInit {
   todos: Todo[]  = [];
   main_todo: Todo = null;
-  
+
   async deleteTodo(todo){
     // TODO Delete TODO
     let r = await API_Todos.deleteTodo(todo.id);
@@ -51,7 +51,7 @@ export class TodoListComponent implements OnInit {
   }
 
   selectMainTodo(todo) {
-    this.todoService.setMainTodo(todo[0]);
+    this.todoService.setMainTodo(todo);
   }
 
   closeMainTodo(){
@@ -62,6 +62,25 @@ export class TodoListComponent implements OnInit {
 
   }
 
+  createTodo(e){
+    this.todoService.setEdit({
+      id: null,
+      created_at: ''  ,
+      deadline: '',
+      description: '',
+      status: 11,
+      subject: '',
+      todo_id: null,
+      updated_at: '',
+      user_id: null,
+      weight: 2
+    } as Todo);
+  }
+
+  editTodo(e: Todo){
+    this.todoService.setEdit(e);
+  }
+
   ngOnInit() {
     this.getTodos();
     this.todoService.getMainTodo().subscribe(mainTodo => this.main_todo = mainTodo);
@@ -70,8 +89,11 @@ export class TodoListComponent implements OnInit {
   async getTodos(){
     let r = await this.todoService.fetchTodos();
 
-    this.todoService.getTodos().subscribe(todos => this.todos = todos);
-  }  
+    this.todoService.getTodos().subscribe(todos => {
+      this.todos = [...todos];
+      console.log(this.todos);
+    });
+  }
 }
 
 

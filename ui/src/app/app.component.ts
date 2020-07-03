@@ -17,10 +17,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todoService.getAuth().subscribe(isAuth => { 
+    this.auth();
+    this.todoService.getIsFetching().subscribe(isFetching => this.isFetching = isFetching);
+  }
+
+  async auth(){
+    await this.todoService.testAuth();
+    this.todoService.getAuth().subscribe(isAuth => {
       this.isAuth = isAuth; this.router.navigate([isAuth ? "/Todo" : "/Auth"]);
      });
-    this.todoService.getIsFetching().subscribe(isFetching => this.isFetching = isFetching);
   }
 
   async logout(){

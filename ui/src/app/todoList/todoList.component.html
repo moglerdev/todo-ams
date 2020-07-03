@@ -41,7 +41,7 @@
                 <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button class="md-raised" color="warn" (click)="deleteTodo(todo)">
                     <mat-icon aria-hidden="false" aria-label="Delete Todo">delete</mat-icon>
                 </button>
-                <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button color="primary"><!--(click)="editTodo(todo)">--> 
+                <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button color="primary" (click)="editTodo(todo)">
                     <mat-icon aria-hidden="false" aria-label="Edit Todo">create</mat-icon>
                 </button>
                 <button *ngIf="main_todo == null" mat-icon-button color="secondary" (click)="selectMainTodo(todo)">

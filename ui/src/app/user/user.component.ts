@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { API_User } from 'src/api';
 import * as moment from 'moment';
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-user',
@@ -10,7 +11,7 @@ import * as moment from 'moment';
 export class UserComponent implements OnInit {
   users = [];
 
-  constructor() { }
+  constructor(public todoService: TodoService) { }
 
   ngOnInit(): void {
     this.load();
@@ -21,10 +22,12 @@ export class UserComponent implements OnInit {
   }
 
   async load(){
+    this.todoService.addFetch();
     let r = await API_User.getAll();
 
     if(r.ok){
       this.users = await r.json();
     }
+    this.todoService.removeFetch();
   }
 }

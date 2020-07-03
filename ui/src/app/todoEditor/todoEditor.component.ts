@@ -8,6 +8,7 @@ import {
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 import * as moment from 'moment';
+import { TodoService } from '../todo.service';
 
 export const GERMAN_FORMAT = {
   parse: {
@@ -25,7 +26,7 @@ export const GERMAN_FORMAT = {
 @Component({
   selector: 'app-todoEditor',
   templateUrl: './todoEditor.component.html',
-  styleUrls: ['./todoEditor.component.css'],  
+  styleUrls: ['./todoEditor.component.css'],
   providers: [
     // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
     // application's root module. We provide it at the component level here, due to limitations of
@@ -40,33 +41,22 @@ export const GERMAN_FORMAT = {
   ],
 })
 export class TodoEditorComponent implements OnInit {
-  @Input() todo: Todo;
+  todo: Todo = null;
 
-  @Output() closeTodo = new EventEmitter();
-  
-  async saveTodo(e){
-    // TODO If Todo.ID == 0 then create new
-    //TODO Save TODO
-    let r;
-    if(this.todo.id == null){
-      r = await API_Todos.createTodo(this.todo);
-
-    }else{
-      r = await API_Todos.updateTodo(this.todo.id, this.todo);
-
-    }
-
-
-    if(!r.ok){
-      alert("Fehler beim Speichern!");
-    }else{
-      this.closeTodo.emit(e);
-    }
+  saveTodo(e){
+    this.todoService.saveEdit({...this.todo});
   }
 
-  constructor() {
+  closeTodo(){
+    this.todoService.setEdit(null);
+  }
+
+  constructor(public todoService: TodoService) {
   }
 
   ngOnInit() {
+    this.todoService.getEdit().subscribe(edit => {
+      this.todo = edit;
+    });
   }
 }
