@@ -1,7 +1,8 @@
 import { Todo } from './app/Todo.type';
+import { TodoService } from './app/todo.service';
 
-//const main_url = new URL('public/api/', window.location.origin);
-const main_url = new URL('http://127.0.0.1:8000/api/');
+const main_url = new URL('public/api/', window.location.origin);
+//const main_url = new URL('http://127.0.0.1:8000/api/');
 
 var oauth_session = null;
 
@@ -13,6 +14,16 @@ const getHeaders = () => {
   heads.append("Accept", "application/json");
   heads.append("Content-Type", "application/json");
   return heads;
+}
+
+export const API_User = {
+  getAll: () => fetch(new URL('oauth/all', main_url).href, {
+    method: 'GET',
+  }),
+  get: () => fetch(new URL('oauth/user', main_url).href, {
+    method: 'GET',
+    headers: getHeaders()
+  })
 }
 
 export const API_OAuth = {
@@ -79,7 +90,7 @@ export const API_OAuth = {
     }),
   logout: () =>
     fetch(new URL('oauth/logout', main_url).href, {
-      method: 'GET',
+      method: 'POST',
       headers: getHeaders()
     }),
 }

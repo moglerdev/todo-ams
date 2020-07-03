@@ -26,6 +26,7 @@ class AuthController extends Controller
             return response()->json(["error"=>"Unauthorised"], 401);
         } 
     } 
+
     /*+
     Register api *
     @return \Illuminate\Http\Response */ 
@@ -51,5 +52,26 @@ class AuthController extends Controller
            Auth::user()->AauthAcessToken()->delete();
         }
         return response()->json(["message"=>"logout was successfuly"], 200);
+    }
+    
+    /*+
+    login api *
+    @return \Illuminate\Http\Response */
+    public function changePassword(Request $request, $id){ 
+        
+    } 
+    
+    /*+
+    login api *
+    @return \Illuminate\Http\Response */
+    public function changeInformation(Request $request, $id){ 
+        
+    } 
+
+    /*+
+     *
+    @return \Illuminate\Http\Response */ 
+    public function getUsers() { 
+        return response()->json(User::all(), 200);
     }
 }

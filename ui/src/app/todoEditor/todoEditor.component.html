@@ -8,21 +8,21 @@
     <mat-grid-tile colspan="3" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Erstellt am:</mat-label>
-            <input disabled matInput [matDatepicker]="picker_created_at" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.created_at" (input)="todo.subject = $event.target.value">
+            <input disabled matInput [matDatepicker]="picker_created_at" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.created_at">
             <mat-datepicker #picker_created_at></mat-datepicker>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="3" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Geändert am:</mat-label>
-            <input disabled matInput [matDatepicker]="picker_updated_at" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.updated_at" (input)="todo.subject = $event.target.value">
+            <input disabled matInput [matDatepicker]="picker_updated_at" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.updated_at">
             <mat-datepicker #picker_updated_at></mat-datepicker>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="4" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Titel</mat-label>
-            <input required matInput placeholder="Schnell beschreibender Titel?" [value]="todo.subject" (input)="todo.subject = $event.target.value">
+            <input required matInput placeholder="Schnell beschreibender Titel?" [value]="todo.subject" (input)="todo.subject = $event.target.value" required>
         </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile colspan="2" rowspan="1" style.background="green">
@@ -46,7 +46,7 @@
     <mat-grid-tile colspan="2" rowspan="1" style.background="green">
         <mat-form-field class="full-width" appearance="fill">
             <mat-label>Deadline</mat-label>
-            <input matInput [matDatepicker]="picker_deadline" placeholder="Bis wann muss die Todo erledigt sein?" [value]="todo.deadline" (input)="todo.subject = $event.target.value">
+            <input matInput [matDatepicker]="picker_deadline" placeholder="Bis wann muss die Todo erledigt sein?" [formControl]="deadline" />
             <mat-datepicker-toggle matSuffix [for]="picker_deadline"></mat-datepicker-toggle>
             <mat-datepicker #picker_deadline></mat-datepicker>
         </mat-form-field>
@@ -63,8 +63,16 @@
             </mat-select>
         </mat-form-field>
     </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="1" style.background="green" *ngIf="isMainTodo">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Sachbearbeiter</mat-label>
+            <mat-select [(ngModel)]="todo.user_id" required>
+                <mat-option *ngFor="let user of users" [value]="user.id">{{user.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-grid-tile>
     <mat-grid-tile colspan="6" rowspan="1" style.background="green">
-        <button mat-button color="warn" (click)="closeTodo.emit($event)">
+        <button mat-button color="warn" (click)="closeTodo()">
             <mat-icon aria-hidden="false" aria-label="Delete Todo">block</mat-icon> Abbrechen
         </button>
         <button mat-button color="primary" (click)="saveTodo($event)">

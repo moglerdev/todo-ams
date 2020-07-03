@@ -51,9 +51,12 @@ import {MatTreeModule} from '@angular/material/tree';
 import { TodoListComponent } from './todoList/todoList.component';
 import { TodoEditorComponent } from './todoEditor/todoEditor.component';
 import { AuthComponent } from './auth/auth.component';
+import { UserComponent } from './user/user.component';
+import { TodoComponent } from './todo/todo.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent, TodoListComponent, TodoEditorComponent, AuthComponent],
+  declarations: [AppComponent, TodoListComponent, TodoEditorComponent, AuthComponent, UserComponent, TodoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -105,6 +108,8 @@ import { AuthComponent } from './auth/auth.component';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

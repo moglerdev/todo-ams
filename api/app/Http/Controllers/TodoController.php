@@ -65,7 +65,7 @@ class TodoController extends Controller
         $todo_db = Todo::where([["id", '=', $id], [ "user_id", '=', $user_id]])->first();
         if($todo_db !== null){
             $todo = Todo::find($id);
-            $todo->user_id = $user_id;
+            $todo->user_id = is_null($request->user_id) ? $user_id : $request->user_id;
             $todo->todo_id = is_null($request->todo_id) ? $todo->todo_id : $request->todo_id;
             $todo->subject = is_null($request->subject) ? $todo->subject : $request->subject;
             $todo->description = is_null($request->description) ? $todo->description : $request->description;
