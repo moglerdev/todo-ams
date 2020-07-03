@@ -486,8 +486,8 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\mogler\Documents\GitHub\todo-ams\ui\node_modules\@angular\material\prebuilt-themes\deeppurple-amber.css */"./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css");
-module.exports = __webpack_require__(/*! C:\Users\mogler\Documents\GitHub\todo-ams\ui\src\styles.scss */"./src/styles.scss");
+__webpack_require__(/*! C:\Users\chris\source\repos\todo-ams\ui\node_modules\@angular\material\prebuilt-themes\deeppurple-amber.css */"./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css");
+module.exports = __webpack_require__(/*! C:\Users\chris\source\repos\todo-ams\ui\src\styles.scss */"./src/styles.scss");
 
 
 /***/ })

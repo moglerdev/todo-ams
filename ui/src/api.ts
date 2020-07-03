@@ -1,8 +1,8 @@
 import { Todo } from './app/Todo.type';
 import { TodoService } from './app/todo.service';
 
-//const main_url = new URL('public/api/', window.location.origin);
-const main_url = new URL('http://127.0.0.1:8000/api/');
+const main_url = new URL('public/api/', window.location.origin);
+//const main_url = new URL('http://127.0.0.1:8000/api/');
 
 var oauth_session = null;
 

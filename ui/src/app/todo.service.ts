@@ -17,7 +17,7 @@ export class TodoService {
   private sessionUser: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
 
   private main_todo: BehaviorSubject<Todo | null> = new BehaviorSubject<Todo | null>(null);;
-  private todos: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo | null>([]);
+  private todos: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
   private edit: BehaviorSubject<Todo> = new BehaviorSubject<Todo>(null);
   /*{
     id: null,
