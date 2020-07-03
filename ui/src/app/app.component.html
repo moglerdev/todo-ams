@@ -1,17 +1,17 @@
 <mat-toolbar>
     <span>Todo-Asmus</span>
-    <button mat-icon-button routerLink="/Auth" routerLinkActive="active">
-      <mat-icon>login</mat-icon>
-    </button>
+    <span class="menu-spacer"></span>
     <button mat-icon-button routerLink="/User" routerLinkActive="active">
       <mat-icon>supervisor_account</mat-icon>
     </button>
-    <button *ngIf="isAuth" mat-icon-button routerLink="/Auth" routerLinkActive="active">
+    <button *ngIf="isAuth" mat-icon-button routerLink="/Todo" routerLinkActive="active">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="menu-spacer"></span>
-    <button mat-icon-button aria-label="Logout from your Account" *ngIf="isAuth" (click)="logout($event)">
+    <button *ngIf="isAuth" mat-icon-button aria-label="Logout from your Account" (click)="logout($event)">
         <mat-icon>logout</mat-icon>
+    </button>
+    <button *ngIf="!isAuth" mat-icon-button routerLink="/Auth" routerLinkActive="active">
+      <mat-icon>login</mat-icon>
     </button>
 </mat-toolbar>
 
@@ -19,4 +19,6 @@
     <h2>Loading</h2>
 </div>
 
-<router-outlet></router-outlet>
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

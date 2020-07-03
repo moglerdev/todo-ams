@@ -1,1 +1,29 @@
-<p>user works!</p>
+<h2>Userliste</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Erstellt</th>
+            <th>Modified</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>
+                <button mat-icon-button color="primary">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="accent">
+                    <mat-icon>vpn_key</mat-icon>
+                </button>
+            </td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{formatDate(user.created_at)}}</td>
+            <td>{{formatDate(user.updated_at)}}</td>
+        </tr>
+    </tbody>
+</table>

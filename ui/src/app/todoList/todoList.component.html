@@ -19,17 +19,7 @@
             Zurück zur Aufgabenliste
         </button>
     </mat-grid-tile>
-    <!-- TODO 
-    <mat-grid-tile colspan="1" rowspan="1" *ngIf="main_todo != null && main_todo.status < 90">
-        <button mat-button color="warn" (click)="deleteTodo(main_todo); closeMainTodo()">
-            "{{main_todo.subject}}" löschen 
-        </button>
-    </mat-grid-tile>
-    <mat-grid-tile colspan="1" rowspan="1" *ngIf="main_todo != null && main_todo.status < 90">
-        <button mat-button color="warn" (click)="closeMainTodo($event)">
-            Als erledigt makieren 
-        </button>
-    </mat-grid-tile>-->
+
 </mat-grid-list>
 
 
@@ -45,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let todo of sortedTodos">
+        <tr *ngFor="let todo of todos">
             <td>
 
                 <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button class="md-raised" color="warn" (click)="deleteTodo(todo)">
@@ -66,57 +56,12 @@
         </tr>
     </tbody>
 </table>
-<!--
-<mat-table [dataSource]="onGoingTodos">
-    <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
-        <mat-cell *matCellDef="let todo">
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="subject">
-        <mat-header-cell *matHeaderCellDef> Thema </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.subject }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef> Beschreibung </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.description }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="weight">
-        <mat-header-cell *matHeaderCellDef> Gewicht </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.weight }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="deadline">
-        <mat-header-cell *matHeaderCellDef> Deadline </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.deadline }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.status }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="autor">
-        <mat-header-cell *matHeaderCellDef> Autor </mat-header-cell>
-        <mat-cell *matCellDef="let todo"> {{ todo.user_id }} </mat-cell>
-    </ng-container>
-
-    <!-- Header and Row Declarations --
-    <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-row>
-</mat-table>
-<div *ngIf="onGoingTodos.length === 0" style="width: 100%;text-align: center;">
-    <span>Keine Aufgaben</span>
-    <span *ngIf="main_todo != null"> in dieser Liste</span>
-</div>
--->
 <hr>
 <div style="width: 100%; text-align: center;">
     <h3>Bereits erledigte Aufgaben:</h3>
 </div>
+
+<!--
 <mat-table [dataSource]="doneTodos">
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
@@ -157,7 +102,7 @@
         <mat-cell *matCellDef="let todo"> {{ todo.user_id }} </mat-cell>
     </ng-container>
 
-    <!-- Header and Row Declarations -->
+    !-- Header and Row Declarations --
     <mat-header-row *matHeaderRowDef="['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-header-row>
     <mat-row *matRowDef="let row; columns: ['actions', 'subject', 'description', 'weight', 'deadline', 'status', 'autor']"></mat-row>
 </mat-table>
@@ -165,3 +110,4 @@
     <span>Keine erledigten Aufgaben</span>
     <span *ngIf="main_todo != null"> in dieser Liste</span>
 </div>
+-->

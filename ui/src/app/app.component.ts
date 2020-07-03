@@ -1,27 +1,30 @@
-import { Component } from '@angular/core';
-import { API_OAuth } from 'src/api';
+import { Component, OnInit } from '@angular/core';
+import { TodoService } from './todo.service';
+import {Router} from "@angular/router"
+import { API_User, API_OAuth } from 'src/api';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title: string = 'ui';
   isAuth: boolean = false;
-  isFetching: boolean = true;
+  isFetching: boolean = false;
 
-  constructor(){
-    this.testAuth();
+  constructor(public todoService: TodoService, private router: Router){
   }
 
-  async testAuth(){
-    this.isAuth = await API_OAuth.isAuth();
-    this.isFetching = false;
+  ngOnInit() {
+    this.todoService.getAuth().subscribe(isAuth => { 
+      this.isAuth = isAuth; this.router.navigate([isAuth ? "/Todo" : "/Auth"]);
+     });
+    this.todoService.getIsFetching().subscribe(isFetching => this.isFetching = isFetching);
   }
 
-  async logout(e){
+  async logout(){
     let r = await API_OAuth.signOut();
-    this.isFetching = false;
-    this.isAuth = false;
+    this.todoService.setAuth(false);
   }
 }

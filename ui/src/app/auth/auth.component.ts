@@ -1,5 +1,6 @@
 import { OnInit, Component, Output, EventEmitter} from '@angular/core';
 import { API_OAuth } from 'src/api';
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-auth',
@@ -8,8 +9,6 @@ import { API_OAuth } from 'src/api';
 })
 export class AuthComponent implements OnInit {
   isRegister: boolean = true;
-
-  @Output() onAuth = new EventEmitter();
   
   user = {
     name: '',
@@ -18,7 +17,7 @@ export class AuthComponent implements OnInit {
     confirm_password: '',
   }
 
-  constructor() {
+  constructor(public todoService: TodoService) {
   }
 
   ngOnInit() {
@@ -36,7 +35,7 @@ export class AuthComponent implements OnInit {
       alert("Can not loggin!");
     }
     else{
-      this.onAuth.emit(e);
+      this.todoService.setAuth(true);
     }
   }
 }

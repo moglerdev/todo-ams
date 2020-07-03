@@ -4,6 +4,7 @@ import { Todo } from '../Todo.type';
 
 import * as moment from 'moment';
 import { Sort } from '@angular/material/sort';
+import { TodoService } from '../todo.service';
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -16,12 +17,6 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
 })
 export class TodoListComponent implements OnInit, OnChanges {
   todos: Todo[]  = [];
-
-  sortedTodos: Todo[] = [];
-
-
-  onGoingTodos: Todo[] = [];
-  doneTodos: Todo[] = [];
 
   @Output() editingTodo = new EventEmitter();
   @Output() selectedMainTodo = new EventEmitter();
@@ -39,13 +34,13 @@ export class TodoListComponent implements OnInit, OnChanges {
   }
 
   sortTodo(sort: Sort){
-    const data = this.onGoingTodos.slice();
+    const data = this.todos.slice();
     if (!sort.active || sort.direction === '') {
-      this.sortedTodos = data;
+      this.todos = data;
       return;
     }
 
-    this.sortedTodos = data.sort((a, b) => {
+    this.todos = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'subject': return compare(a.subject, b.subject, isAsc);
@@ -90,7 +85,9 @@ export class TodoListComponent implements OnInit, OnChanges {
     this.editingTodo.emit(todo);
   }
 
-  constructor() {}
+  constructor(public todoService: TodoService) {
+
+  }
 
   ngOnChanges(changes: SimpleChanges | { main_todo: Todo }): void {
     console.log(changes);
@@ -102,24 +99,6 @@ export class TodoListComponent implements OnInit, OnChanges {
   }
   
   async fetchData(){
-    this.todos = [];
-    this.onGoingTodos = [];
-    this.doneTodos = [];
-    this.sortedTodos = [];
-
-    let r, todo = this.main_todo;
-    if(todo == null){
-      r = await API_Todos.getAllMainTodos();
-    }else{
-      r = await API_Todos.getAllTodosFromMain(todo.id);
-    }
-
-    if(r.ok){
-      this.todos = await r.json();
-      this.onGoingTodos = this.todos.filter(x=> x.status < 90);
-      this.sortedTodos = this.onGoingTodos;
-      this.doneTodos = this.todos.filter(x=> x.status > 90);
-    }
   }
 }
 
