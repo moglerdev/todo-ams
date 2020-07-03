@@ -1,5 +1,14 @@
 <mat-toolbar>
     <span>Todo-Asmus</span>
+    <button mat-icon-button routerLink="/Auth" routerLinkActive="active">
+      <mat-icon>login</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/User" routerLinkActive="active">
+      <mat-icon>supervisor_account</mat-icon>
+    </button>
+    <button *ngIf="isAuth" mat-icon-button routerLink="/Auth" routerLinkActive="active">
+      <mat-icon>menu</mat-icon>
+    </button>
     <span class="menu-spacer"></span>
     <button mat-icon-button aria-label="Logout from your Account" *ngIf="isAuth" (click)="logout($event)">
         <mat-icon>logout</mat-icon>
@@ -8,17 +17,6 @@
 
 <div *ngIf="isFetching" class="loading">
     <h2>Loading</h2>
-</div>
-
-<div class="content">
-    <div *ngIf="!isAuth">
-        <app-auth (onAuth)="isAuth = true;"></app-auth>
-    </div>
-    <div *ngIf="isAuth">
-        <app-todoEditor *ngIf="edit != null" [todo]="edit" (closeTodo)="closeTodo($event)"></app-todoEditor>
-
-        <app-todoList *ngIf="edit == null" [main_todo]="main_todo" (editingTodo)="editTodo($event)" (selectedMainTodo)="main_todo = $event" (closedMainTodo)="main_todo = null"> </app-todoList>
-    </div>
 </div>
 
 <router-outlet></router-outlet>

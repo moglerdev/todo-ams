@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Todo } from './Todo.type'
 import { API_OAuth } from 'src/api';
 @Component({
   selector: 'app-root',
@@ -8,8 +7,6 @@ import { API_OAuth } from 'src/api';
 })
 export class AppComponent {
   title: string = 'ui';
-  edit: Todo | null;
-  main_todo: Todo = null;
   isAuth: boolean = false;
   isFetching: boolean = true;
 
@@ -20,14 +17,6 @@ export class AppComponent {
   async testAuth(){
     this.isAuth = await API_OAuth.isAuth();
     this.isFetching = false;
-  }
-
-  editTodo(todo){
-    this.edit = todo;
-  }
-
-  closeTodo(e){
-    this.edit = null;
   }
 
   async logout(e){
