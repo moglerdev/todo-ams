@@ -9,14 +9,16 @@ import { TodoService } from '../todo.service';
 })
 export class TodoComponent implements OnInit {
   isEdit: boolean = false;
+  isMainTodo: boolean = true;
 
   constructor(public todoService: TodoService) { }
 
   ngOnInit(): void {
     this.todoService.getEdit().subscribe(t => {
       this.isEdit = t != null;
-      console.log(t);
     });
+
+    this.todoService.getMainTodo().subscribe(m => this.isMainTodo = m == null);
   }
 
 }

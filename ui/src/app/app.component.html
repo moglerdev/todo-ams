@@ -1,6 +1,7 @@
 <mat-toolbar>
     <span>Todo-Asmus</span>
     <span class="menu-spacer"></span>
+    <small *ngIf="user != null">{{user.name}}</small>
     <button mat-icon-button routerLink="/User" routerLinkActive="active">
       <mat-icon>supervisor_account</mat-icon>
     </button>
@@ -15,7 +16,7 @@
     </button>
 </mat-toolbar>
 
-<div *ngIf="isFetching" class="loading">
+<div *ngIf="isFetching | async" class="loading">
     <h2>Bitte warten ...</h2>
 </div>
 

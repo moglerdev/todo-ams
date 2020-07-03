@@ -26,16 +26,23 @@
 <table class="table" matSort (matSortChange)="sortTodo($event)">
     <thead>
         <tr>
+            <td colspan="3"></td>
+            <td colspan="4"><small>(je größer die Nummer, desto dringender die Aufgabe)</small></td>
+        </tr>
+        <tr>
             <th>#</th>
             <th mat-sort-header="subject">Thema</th>
             <th mat-sort-header="description">Beschreibung</th>
-            <th mat-sort-header="weight">Gewichtung</th>
+            <th mat-sort-header="calcWeight">
+                Dringlichkeit
+            </th>
             <th mat-sort-header="deadline">Deadline</th>
+            <th mat-sort-header="weight">Gewichtung</th>
             <th mat-sort-header="status">Status</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let todo of todos">
+        <tr *ngFor="let todo of editableTodos">
             <td>
 
                 <button *ngIf="main_todo == null || main_todo.status < 90" mat-icon-button class="md-raised" color="warn" (click)="deleteTodo(todo)">
@@ -51,18 +58,62 @@
             <td>{{ todo.subject }} </td>
             <td>{{ todo.description }} </td>
             <td>{{ calcWeight(todo) }} </td>
-            <td>{{ todo.deadline }} </td>
-            <td>{{ todo.status }} </td>
+            <td>{{ getDate(todo) }} </td>
+            <td>{{ getGewicht(todo) }} </td>
+            <td>{{ getStatus(todo) }} </td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr *ngIf="editableTodos.length < 1">
+            <td colspan="6">
+                Keine
+                <span *ngIf="main_todo == null">Aufgabenlisten</span>
+                <span *ngIf="main_todo != null">Aufgaben</span>
+            </td>
+        </tr>
+    </tfoot>
 </table>
-<!--
+
 <hr>
 <div style="width: 100%; text-align: center;">
     <h3>Bereits erledigte Aufgaben:</h3>
 </div>
 
-<mat-table [dataSource]="doneTodos">
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Thema</th>
+            <th>Beschreibung</th>
+            <th>Deadline</th>
+            <th>Gewichtung</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let todo of getDoneTodos()">
+            <td>
+            </td>
+            <td>{{ todo.subject }} </td>
+            <td>{{ todo.description }} </td>
+            <td>{{ getDate(todo) }} </td>
+            <td>{{ getGewicht(todo) }} </td>
+            <td>{{ getStatus(todo) }} </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr *ngIf="editableTodos.length < 1">
+            <td colspan="6">
+                Keine erledigten
+                <span *ngIf="main_todo == null">Aufgabenlisten</span>
+                <span *ngIf="main_todo != null">Aufgaben</span>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<!--
+mat-nav-list [dataSource]="doneTodos">
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
         <mat-cell *matCellDef="let todo">
@@ -109,5 +160,4 @@
 <div *ngIf="doneTodos.length === 0" style="width: 100%;text-align: center;">
     <span>Keine erledigten Aufgaben</span>
     <span *ngIf="main_todo != null"> in dieser Liste</span>
-</div>
--->
+</div>-->

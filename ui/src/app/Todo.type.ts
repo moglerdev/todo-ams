@@ -10,3 +10,11 @@ export type Todo = {
     created_at: string | Date,
     updated_at: string | Date | null 
 }
+
+export type User = {
+    id: number,
+    name: string,
+    email: string,
+    created_at: string | null,
+    updated_at: string | null
+}

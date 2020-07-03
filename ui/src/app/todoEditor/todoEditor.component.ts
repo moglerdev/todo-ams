@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { API_Todos } from '../../api';
-import { Todo } from '../Todo.type';
+import { Todo, User } from '../Todo.type';
 
 import {
   MomentDateAdapter,
@@ -44,9 +44,16 @@ export const GERMAN_FORMAT = {
 export class TodoEditorComponent implements OnInit {
   todo: Todo = null;
   deadline = new FormControl(moment());
+  users: User[] = [];
+  sessionUser: User = null;
+
+  @Input() isMainTodo: boolean = false;
 
   saveTodo(e){
-    this.todo.deadline = moment(this.deadline.value).format('YYYY-MM-DD');
+    if(this.deadline.touched){
+      this.todo.deadline = moment(this.deadline.value).format('YYYY-MM-DD');
+    }
+    console.log(this.todo);
     this.todoService.saveEdit({...this.todo});
   }
 
@@ -59,8 +66,22 @@ export class TodoEditorComponent implements OnInit {
 
   ngOnInit() {
     this.todoService.getEdit().subscribe(edit => {
-      this.todo = edit;
-      this.deadline = new FormControl(moment(edit.deadline));
+      if(edit != null){
+        this.todo = edit;
+        if(edit != null && edit.user_id == null){
+          this.todo.user_id = this.sessionUser?.id;
+        }
+        this.deadline = new FormControl(moment(edit.deadline));
+      }
+    });
+
+    this.todoService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+    this.todoService.getSessionUser().subscribe(user => {
+      this.sessionUser = user;
+      if(this.todo.user_id == null)
+        this.todo.user_id = user?.id;
     });
   }
 }

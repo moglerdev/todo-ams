@@ -63,6 +63,14 @@
             </mat-select>
         </mat-form-field>
     </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="1" style.background="green" *ngIf="isMainTodo">
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Sachbearbeiter</mat-label>
+            <mat-select [(ngModel)]="todo.user_id" required>
+                <mat-option *ngFor="let user of users" [value]="user.id">{{user.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-grid-tile>
     <mat-grid-tile colspan="6" rowspan="1" style.background="green">
         <button mat-button color="warn" (click)="closeTodo()">
             <mat-icon aria-hidden="false" aria-label="Delete Todo">block</mat-icon> Abbrechen

@@ -16,6 +16,7 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
 })
 export class TodoListComponent implements OnInit {
   todos: Todo[]  = [];
+  editableTodos: Todo[] = [];
   main_todo: Todo = null;
 
   async deleteTodo(todo){
@@ -28,14 +29,18 @@ export class TodoListComponent implements OnInit {
     }
   }
 
+  getDoneTodos(){
+    return this.todos.filter(x => x.status > 90).sort((a, b) => compare(a.weight, b.weight, false));
+  }
+
   sortTodo(sort: Sort){
-    const data = this.todos.slice();
+    const data = this.editableTodos.slice();
     if (!sort.active || sort.direction === '') {
-      this.todos = data;
+      this.editableTodos = data;
       return;
     }
 
-    this.todos = data.sort((a, b) => {
+    this.editableTodos = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'subject': return compare(a.subject, b.subject, isAsc);
@@ -43,6 +48,7 @@ export class TodoListComponent implements OnInit {
         case 'weight': return compare(a.weight, b.weight, isAsc);
         case 'deadline': return compare(a.deadline, b.deadline, isAsc);
         case 'status': return compare(a.status, b.status, isAsc);
+        case 'calcWeight': return compare(this.calcWeight(a), this.calcWeight(b), isAsc);
         default: return 0;
       }
     });
@@ -90,20 +96,40 @@ export class TodoListComponent implements OnInit {
     if(todo.deadline != null){
       let c = moment(todo.created_at);
       let d = moment(todo.deadline);
-      return c.diff(d, 'days');
+      let n = moment();
+      console.log(c, d, n);
+      let r = (d.diff(c, 'days') / d.diff(n, 'days')) * w;
+      if(isNaN(r)){
+        return 100;
+      }
+      return r;
     }
     else
       return w;
   }
 
-  getGewicht(todo): string{
-    switch(todo) {
-      case 0: return "unwichtig";
-      case 1: return "kaum wichtig";
-      case 2: return "normal";
-      case 3: return "wichtig";
-      case 4: return "sehr wichtig";
+  getGewicht(todo:Todo): string{
+    switch(todo.weight) {
+      case 1: return "unwichtig";
+      case 2: return "kaum wichtig";
+      case 3: return "normal";
+      case 4: return "wichtig";
+      case 5: return "sehr wichtig";
     }
+  }
+
+  getStatus(todo:Todo): string{
+    switch(todo.status) {
+      case 11: return "Offen";
+      case 21: return "in Bearbeitung";
+      case 91: return "erledigt";
+      case 92: return "verspätet erledigt";
+      case 93: return "abgebrochen";
+    }
+  }
+
+  getDate(todo){
+    return moment(todo).format('DD.MM.YYYY');
   }
 
   ngOnInit() {
@@ -113,9 +139,12 @@ export class TodoListComponent implements OnInit {
 
   async getTodos(){
     let r = await this.todoService.fetchTodos();
+    this.editableTodos = [];
 
     this.todoService.getTodos().subscribe(todos => {
       this.todos = todos;
+      console.log(todos);
+      this.editableTodos = todos.filter(x=> x.status < 90);
     });
   }
 }
