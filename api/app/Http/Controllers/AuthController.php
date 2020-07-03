@@ -52,4 +52,11 @@ class AuthController extends Controller
         }
         return response()->json(["message"=>"logout was successfuly"], 200);
     }
+
+    /*+
+     *
+    @return \Illuminate\Http\Response */ 
+    public function getUsers() { 
+        return response()->json(User::all(), 200);
+    }
 }

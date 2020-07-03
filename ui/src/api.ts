@@ -15,6 +15,16 @@ const getHeaders = () => {
   return heads;
 }
 
+export const API_User = {
+  getAll: () => fetch(new URL('oauth/all', main_url).href, {
+    method: 'GET',
+  }),
+  get: () => fetch(new URL('oauth/user', main_url).href, {
+    method: 'GET',
+    headers: getHeaders()
+  })
+}
+
 export const API_OAuth = {
   isAuth: async () => {
     if (oauth_session == null){
@@ -79,7 +89,7 @@ export const API_OAuth = {
     }),
   logout: () =>
     fetch(new URL('oauth/logout', main_url).href, {
-      method: 'GET',
+      method: 'POST',
       headers: getHeaders()
     }),
 }
