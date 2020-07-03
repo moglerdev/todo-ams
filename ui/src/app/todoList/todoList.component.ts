@@ -4,9 +4,6 @@ import { Todo } from '../Todo.type';
 import * as moment from 'moment';
 import { Sort } from '@angular/material/sort';
 import { TodoService } from '../todo.service';
-import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
-import { mapToMapExpression } from '@angular/compiler/src/render3/util';
-import { stringify } from '@angular/compiler/src/util';
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

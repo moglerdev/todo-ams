@@ -53,6 +53,7 @@ import { TodoEditorComponent } from './todoEditor/todoEditor.component';
 import { AuthComponent } from './auth/auth.component';
 import { UserComponent } from './user/user.component';
 import { TodoComponent } from './todo/todo.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, TodoListComponent, TodoEditorComponent, AuthComponent, UserComponent, TodoComponent],
@@ -107,6 +108,8 @@ import { TodoComponent } from './todo/todo.component';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

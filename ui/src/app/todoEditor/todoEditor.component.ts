@@ -43,9 +43,10 @@ export const GERMAN_FORMAT = {
 })
 export class TodoEditorComponent implements OnInit {
   todo: Todo = null;
-  deadline = new FormControl();
+  deadline = new FormControl(moment());
+
   saveTodo(e){
-    this.todo.deadline = this.deadline.value;
+    this.todo.deadline = moment(this.deadline.value).format('YYYY-MM-DD');
     this.todoService.saveEdit({...this.todo});
   }
 
@@ -58,8 +59,8 @@ export class TodoEditorComponent implements OnInit {
 
   ngOnInit() {
     this.todoService.getEdit().subscribe(edit => {
-      this.deadline = new FormControl(moment(edit.deadline));
       this.todo = edit;
+      this.deadline = new FormControl(moment(edit.deadline));
     });
   }
 }
