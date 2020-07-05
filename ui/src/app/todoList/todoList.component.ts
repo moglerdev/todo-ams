@@ -26,6 +26,7 @@ export class TodoListComponent implements OnInit {
       alert("Todo konnte nicht gelöscht werden!");
     }else{
       this.todos = this.todos.filter(x=> x.id !== todo.id);
+      this.editableTodos = this.todos.filter(x=> x.status < 90);
     }
   }
 
